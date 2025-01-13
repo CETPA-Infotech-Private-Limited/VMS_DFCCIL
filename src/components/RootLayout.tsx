@@ -1,6 +1,6 @@
-import SiteHeader from './site-header'
-import Footer from './footer'
-import React from 'react'
+import SiteHeader from './site-header';
+import Footer from './footer';
+import React from 'react';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -11,7 +11,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default RootLayout
+export default RootLayout;
