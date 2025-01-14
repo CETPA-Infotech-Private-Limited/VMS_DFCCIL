@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/app/store'
 
 const VisitorMultiStepForm = () => {
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(0)
   const personalDetails = useSelector((state: RootState) => state.personalDetails)
   console.log('personalDetails', personalDetails)
   const navigate = useNavigate()
@@ -19,9 +19,9 @@ const VisitorMultiStepForm = () => {
   const handleNextStep = () => setCurrentStep((prev) => prev + 1)
   const handlePreviousStep = () => setCurrentStep((prev) => prev - 1)
 
-  // if (personalDetails.contactNumber === '' && personalDetails.otp === '') {
-  //   return <Navigate to="/" replace />
-  // }
+  if (personalDetails.contactNumber === '' && personalDetails.otp === '') {
+    return <Navigate to="/" replace />
+  }
 
   return (
     <div className="w-full">

@@ -10,8 +10,31 @@ import VisitorLog from '@/pages/visitorLog/VisitorLog'
 import Visitor from '@/pages/visitor/Visitor'
 import RootLayout from '@/components/RootLayout'
 import VisitorMultiStepForm from '@/components/visitor/visitor-multistep-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchEmployees, setEmployeesData } from '@/features/visitor/employeeSlice'
+import { AppDispatch, RootState } from '@/app/store'
+import { useEffect } from 'react'
 
 const AppRoutes = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const employees = useSelector((state: RootState) => state.employee.employees)
+  const status = useSelector((state: RootState) => state.employee.status)
+  const error = useSelector((state: RootState) => state.employee.error)
+
+  const fetchData = async () => {
+    const response = await fetch('https://orgsvc.dfccil.com/api/Organization/GetOrganizationHierarchy')
+    if (!response.ok) {
+      throw new Error('Failed to fetch employees')
+    }
+    const data = await response.json()
+    dispatch(setEmployeesData(data.data))
+    console.log('Employees fetched: ', data.data)
+  }
+  useEffect(() => {
+    fetchData()
+    console.log('Employees from Redux:', employees)
+  }, [dispatch])
+
   return (
     <Routes>
       {/* Public Routes */}
