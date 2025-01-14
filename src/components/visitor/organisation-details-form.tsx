@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
-import { Input } from '../ui/input'
-import { Label } from '../ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react'
-import Heading from '../heading'
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
-import { Button } from '../ui/button'
-import { CustomCalendar } from '../ui/CustomCalendar'
-import { environment } from '@/config'
+import React, { useEffect, useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import RSelect from 'react-select';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import Heading from '../heading';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { Button } from '../ui/button';
+import { CustomCalendar } from '../ui/CustomCalendar';
+import { environment } from '@/config';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
+import { Employee, SelectedEmployee } from '@/types/Employee';
+import ReactSelect from '../ReactSelect';
 
 const OrganisationDetailsForm = ({ onNextStep, onBackStep }: { onNextStep: () => void; onBackStep: () => void }) => {
-  const [timeSlots, setTimeSlots] = useState<{ id: string; label: string }[]>([])
-  const [selectedSlot, setSelectedSlot] = useState<string>('')
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null) // State for selected date
-  console.log('environment', environment)
-  const holidays = [
-    new Date(2025, 0, 1), // January 1, 2025
-    new Date(2025, 11, 25) // December 25, 2025
-  ]
+  const [timeSlots, setTimeSlots] = useState<{ id: string; label: string }[]>([]);
+  const [selectedSlot, setSelectedSlot] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  console.log('environment', environment);
+  const holidays = [new Date(2025, 0, 1), new Date(2025, 11, 25)];
 
   useEffect(() => {
     const fetchTimeSlots = async () => {
@@ -34,16 +36,19 @@ const OrganisationDetailsForm = ({ onNextStep, onBackStep }: { onNextStep: () =>
             { id: 'slot7', label: '3:00 PM - 4:00 PM' },
             { id: 'slot8', label: '4:00 PM - 5:00 PM' },
             { id: 'slot9', label: '5:00 PM - 6:00 PM' },
-            { id: 'slot10', label: '6:00 PM - 7:00 PM' }
-          ])
+            { id: 'slot10', label: '6:00 PM - 7:00 PM' },
+          ]);
         }, 1000)
-      )
-      setTimeSlots(response)
-    }
+      );
+      setTimeSlots(response);
+    };
 
-    fetchTimeSlots()
-  }, [])
+    fetchTimeSlots();
+  }, []);
 
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(undefined);
+  const personalDetails = useSelector((state: RootState) => state.personalDetails);
+  console.log(personalDetails);
   return (
     <div className="bg-white p-2 sm:p-4 rounded-lg">
       <Tabs defaultValue="name" className="w-[320px] sm:w-[600px] mt-6">
@@ -56,7 +61,9 @@ const OrganisationDetailsForm = ({ onNextStep, onBackStep }: { onNextStep: () =>
           </TabsTrigger>
         </TabsList>
         <TabsContent value="name">
-          <Input placeholder="Enter Employee Name" />
+          <div className="w-full ">
+            <ReactSelect selectedEmployee={selectedEmployee} setSelectedEmployee={setSelectedEmployee} />
+          </div>
         </TabsContent>
         <TabsContent value="department" className="flex flex-col gap-4">
           <Label htmlFor="country">Select Department</Label>
@@ -84,8 +91,8 @@ const OrganisationDetailsForm = ({ onNextStep, onBackStep }: { onNextStep: () =>
       <div className="flex flex-row items-center w-full mt-4">
         <div className="font-semibold w-1/3">Employee Details</div>
         <div className="w-2/3 border-l-2 border-gray-300 pl-6">
-          <div>Avdhesh</div>
-          <div>Developer / IT Department</div>
+          <div>{selectedEmployee?.empName}</div>
+          <div>{selectedEmployee?.designation}</div>
         </div>
       </div>
 
@@ -117,11 +124,7 @@ const OrganisationDetailsForm = ({ onNextStep, onBackStep }: { onNextStep: () =>
               <Label className="text-lg font-semibold">
                 Choose Time Slot <span className="text-red-500">*</span>
               </Label>
-              <RadioGroup
-                className="mt-6"
-                value={selectedSlot}
-                onValueChange={setSelectedSlot} // Update selected slot
-              >
+              <RadioGroup className="mt-6" value={selectedSlot} onValueChange={setSelectedSlot}>
                 {timeSlots.length === 0 ? (
                   <div className="grid grid-cols-2 gap-4">
                     {Array.from({ length: 4 }).map((_, index) => (
@@ -156,7 +159,7 @@ const OrganisationDetailsForm = ({ onNextStep, onBackStep }: { onNextStep: () =>
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default OrganisationDetailsForm
+export default OrganisationDetailsForm;
