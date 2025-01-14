@@ -1,49 +1,43 @@
-import * as React from 'react'
-import { Home, Settings, UserPlus } from 'lucide-react'
-import { NavMain } from '@/components/nav-main'
-import { NavUser } from '@/components/nav-user'
+import * as React from 'react';
+import { CalendarCheck, CalendarSync, Contact, Home, LayoutDashboard, Settings, UserPlus } from 'lucide-react';
+import { NavMain } from '@/components/nav-main';
+import { NavUser } from '@/components/nav-user';
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui/sidebar'
-import { logo } from '@/assets/image/images'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
+import { logo } from '@/assets/image/images';
 
 const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg'
-  },
   navMain: [
     {
       title: 'Dashboard',
-      url: '/dashboard',
-      icon: Home
+      url: '/home',
+      icon: LayoutDashboard,
     },
     {
-      title: 'Visitor log',
-      url: '/visitor-log',
-      icon: UserPlus
+      title: 'Pending Meeting',
+      url: '/pending-meeting',
+      icon: CalendarSync,
     },
     {
-      title: 'Settings',
-      url: '/setting',
-      icon: Settings
-    }
-  ]
-}
+      title: 'Upcoming Meeting ',
+      url: '/upcomming-meeting',
+      icon: CalendarCheck,
+    },
+    {
+      title: 'Contact List ',
+      url: '/contact-list',
+      icon: Contact,
+    },
+  ],
+};
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className=" flex flex-row justify-center">
-        <img src={logo} alt="logo" className="w-40 h-auto object-fill" />
-      </SidebarHeader>
+    <Sidebar collapsible="offcanvas" {...props} className=" pt-20">
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

@@ -13,6 +13,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/app/store';
 import LoginForm from '@/components/visitor/login-from';
+import Home from '@/pages/home/Home';
+import AppLayout from '@/components/app-layout';
+import PendingMeeting from '@/pages/pending-meeting/PendingMeeting';
+import UpcommingMeeting from '@/pages/upcoming-meeting';
 
 const AppRoutes = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -37,9 +41,39 @@ const AppRoutes = () => {
   }, [dispatch]);
   return (
     <Routes>
-      <Route path="/login" element={<LoginForm />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
-
+      <Route
+        path="/home"
+        element={
+          <AppLayout>
+            <Home />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/pending-meeting"
+        element={
+          <AppLayout>
+            <PendingMeeting />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/upcomming-meeting"
+        element={
+          <AppLayout>
+            <UpcommingMeeting />
+          </AppLayout>
+        }
+      />
+      <Route
+        path="/contact-list"
+        element={
+          <AppLayout>
+            <PendingMeeting />
+          </AppLayout>
+        }
+      />
       <Route path="/" element={<Visitor />} />
       <Route
         path="/visitor-form"

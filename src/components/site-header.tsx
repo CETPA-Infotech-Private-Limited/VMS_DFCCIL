@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router'
-import { logo } from '@/assets/image/images'
+import React from 'react';
+import { Link } from 'react-router';
+import { logo } from '@/assets/image/images';
 
 const SiteHeader: React.FC = () => {
   return (
@@ -20,7 +20,7 @@ const SiteHeader: React.FC = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default SiteHeader
+export default SiteHeader;
