@@ -1,41 +1,41 @@
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
-import { Label } from '../ui/label'
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { Label } from '../ui/label';
 
 interface OtpFormProps {
-  onFormSubmit: (otp: string) => void
+  onFormSubmit: (otp: string) => void;
 }
 
 const FormSchema = z.object({
   otp: z
     .string()
-    .min(6, {
-      message: 'Your one-time password must be 6 characters.'
+    .min(4, {
+      message: 'Your one-time password must be 4 characters.',
     })
-    .regex(/^\d{6}$/, {
-      message: 'One-time password must be a valid 6-digit number.'
-    })
-})
+    .regex(/^\d{4}$/, {
+      message: 'One-time password must be a valid 4-digit number.',
+    }),
+});
 
 const OtpForm: React.FC<OtpFormProps> = ({ onFormSubmit }) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      otp: ''
-    }
-  })
+      otp: '',
+    },
+  });
 
   const {
-    formState: { errors }
-  } = form
+    formState: { errors },
+  } = form;
   const onSubmit = (value: { otp: string }) => {
-    onFormSubmit(value.otp)
-  }
+    onFormSubmit(value.otp);
+  };
 
   return (
     <Form {...form}>
@@ -49,7 +49,7 @@ const OtpForm: React.FC<OtpFormProps> = ({ onFormSubmit }) => {
                 One-Time Password <span className="text-red-500">*</span>
               </Label>
               <FormControl>
-                <InputOTP maxLength={6} {...field} className="w-full">
+                <InputOTP maxLength={4} {...field} className="w-full">
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
                   </InputOTPGroup>
@@ -62,12 +62,12 @@ const OtpForm: React.FC<OtpFormProps> = ({ onFormSubmit }) => {
                   <InputOTPGroup>
                     <InputOTPSlot index={3} />
                   </InputOTPGroup>
-                  <InputOTPGroup>
+                  {/* <InputOTPGroup>
                     <InputOTPSlot index={4} />
                   </InputOTPGroup>
                   <InputOTPGroup>
                     <InputOTPSlot index={5} />
-                  </InputOTPGroup>
+                  </InputOTPGroup> */}
                 </InputOTP>
               </FormControl>
               <FormDescription>Please enter the one-time password sent to your email.</FormDescription>
@@ -80,7 +80,7 @@ const OtpForm: React.FC<OtpFormProps> = ({ onFormSubmit }) => {
         </Button>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default OtpForm
+export default OtpForm;
