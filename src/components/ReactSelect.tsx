@@ -2,7 +2,7 @@ import { RootState } from '@/app/store';
 import { SelectedEmployee } from '@/types/Employee';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import RSelect from 'react-select';
+import Select from 'react-select';
 const ReactSelect = ({ selectedEmployee, setSelectedEmployee }) => {
   const employees = useSelector((state: RootState) => state.employee.employees);
 
@@ -18,7 +18,7 @@ const ReactSelect = ({ selectedEmployee, setSelectedEmployee }) => {
     [employees]
   );
   return (
-    <RSelect
+    <Select
       id="employee-select"
       className="mt-2 mb-2"
       options={options}

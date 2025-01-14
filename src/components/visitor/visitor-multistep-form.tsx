@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import Stepper from '../ui/stepper'
-import PersonalDetails from './personal-details-form'
-import OrganisationDetailsForm from './organisation-details-form'
-import FinalFormReview from './final-form-review'
-import { BadgeCheck } from 'lucide-react'
-import { Link, Navigate, useNavigate } from 'react-router'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/app/store'
+import React, { useEffect, useState } from 'react';
+import Stepper from '../ui/stepper';
+import PersonalDetails from './personal-details-form';
+import OrganisationDetailsForm from './organisation-details-form';
+import FinalFormReview from './final-form-review';
+import { BadgeCheck } from 'lucide-react';
+import { Link, Navigate, useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
 
 const VisitorMultiStepForm = () => {
-  const [currentStep, setCurrentStep] = useState(1)
-  const personalDetails = useSelector((state: RootState) => state.personalDetails)
-  console.log('personalDetails', personalDetails)
-  const navigate = useNavigate()
+  const [currentStep, setCurrentStep] = useState(0);
+  const personalDetails = useSelector((state: RootState) => state.personalDetails);
+  console.log('personalDetails', personalDetails);
+  const navigate = useNavigate();
 
-  const steps = [{ title: 'Personal Info' }, { title: 'Schedule Appointment' }, { title: 'Final Review' }]
+  const steps = [{ title: 'Personal Info' }, { title: 'Schedule Appointment' }, { title: 'Final Review' }];
 
-  const handleNextStep = () => setCurrentStep((prev) => prev + 1)
-  const handlePreviousStep = () => setCurrentStep((prev) => prev - 1)
+  const handleNextStep = () => setCurrentStep((prev) => prev + 1);
+  const handlePreviousStep = () => setCurrentStep((prev) => prev - 1);
 
   // if (personalDetails.contactNumber === '' && personalDetails.otp === '') {
   //   return <Navigate to="/" replace />
@@ -30,7 +30,9 @@ const VisitorMultiStepForm = () => {
           <Stepper steps={steps} currentStep={currentStep} />
           <div className="mt-6">
             {currentStep === 0 && <PersonalDetails onNextStep={handleNextStep} />}
-            {currentStep === 1 && <OrganisationDetailsForm onNextStep={handleNextStep} onBackStep={handlePreviousStep} />}
+            {currentStep === 1 && (
+              <OrganisationDetailsForm onNextStep={handleNextStep} onBackStep={handlePreviousStep} />
+            )}
             {currentStep === 2 && <FinalFormReview onNextStep={handleNextStep} onBackStep={handlePreviousStep} />}
           </div>
         </div>
@@ -38,8 +40,8 @@ const VisitorMultiStepForm = () => {
         <FinalSubmit />
       )}
     </div>
-  )
-}
+  );
+};
 
 const FinalSubmit = () => {
   return (
@@ -50,9 +52,12 @@ const FinalSubmit = () => {
 
       <h1 className="text-2xl sm:text-3xl font-bold text-primary mt-6">Thank You for Submitting Your Details!</h1>
       <p className="text-gray-700 text-sm sm:text-base mt-4 max-w-md">
-        Your appointment has been scheduled successfully. You will receive a notification once it has been approved. If you have any questions, feel
-        free to
-        <Link to="mailto:support@example.com?subject=Query about my Appointment" className="text-primary hover:underline ml-2">
+        Your appointment has been scheduled successfully. You will receive a notification once it has been approved. If
+        you have any questions, feel free to
+        <Link
+          to="mailto:support@example.com?subject=Query about my Appointment"
+          className="text-primary hover:underline ml-2"
+        >
           contact us via email.
         </Link>
       </p>
@@ -67,7 +72,7 @@ const FinalSubmit = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default VisitorMultiStepForm
+export default VisitorMultiStepForm;

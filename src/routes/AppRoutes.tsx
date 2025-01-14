@@ -20,6 +20,7 @@ const AppRoutes = () => {
   const employees = useSelector((state: RootState) => state.employee.employees);
 
   const fetchData = async () => {
+    console.log('inside');
     const response = await fetch('https://orgsvc.dfccil.com/api/Organization/GetOrganizationHierarchy');
     if (!response.ok) {
       throw new Error('Failed to fetch employees');
@@ -29,7 +30,7 @@ const AppRoutes = () => {
     console.log('Employees fetched: ', data.data);
   };
   useEffect(() => {
-    if (!employees) {
+    if (employees.length <= 0) {
       fetchData();
     }
 

@@ -18,12 +18,9 @@ import ReactSelect from '../ReactSelect';
 const OrganisationDetailsForm = ({ onNextStep, onBackStep }: { onNextStep: () => void; onBackStep: () => void }) => {
   const [timeSlots, setTimeSlots] = useState<{ id: string; label: string }[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<string>('');
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null); // State for selected date
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   console.log('environment', environment);
-  const holidays = [
-    new Date(2025, 0, 1), // January 1, 2025
-    new Date(2025, 11, 25), // December 25, 2025
-  ];
+  const holidays = [new Date(2025, 0, 1), new Date(2025, 11, 25)];
 
   useEffect(() => {
     const fetchTimeSlots = async () => {
@@ -50,7 +47,8 @@ const OrganisationDetailsForm = ({ onNextStep, onBackStep }: { onNextStep: () =>
   }, []);
 
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(undefined);
-
+  const personalDetails = useSelector((state: RootState) => state.personalDetails);
+  console.log(personalDetails);
   return (
     <div className="bg-white p-2 sm:p-4 rounded-lg">
       <Tabs defaultValue="name" className="w-[320px] sm:w-[600px] mt-6">
@@ -126,11 +124,7 @@ const OrganisationDetailsForm = ({ onNextStep, onBackStep }: { onNextStep: () =>
               <Label className="text-lg font-semibold">
                 Choose Time Slot <span className="text-red-500">*</span>
               </Label>
-              <RadioGroup
-                className="mt-6"
-                value={selectedSlot}
-                onValueChange={setSelectedSlot} // Update selected slot
-              >
+              <RadioGroup className="mt-6" value={selectedSlot} onValueChange={setSelectedSlot}>
                 {timeSlots.length === 0 ? (
                   <div className="grid grid-cols-2 gap-4">
                     {Array.from({ length: 4 }).map((_, index) => (

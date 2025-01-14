@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Label } from '../ui/label';
+import { ArrowRight } from 'lucide-react';
 
 interface OtpFormProps {
   onFormSubmit: (otp: string) => void;
@@ -70,13 +71,12 @@ const OtpForm: React.FC<OtpFormProps> = ({ onFormSubmit }) => {
                   </InputOTPGroup> */}
                 </InputOTP>
               </FormControl>
-              <FormDescription>Please enter the one-time password sent to your email.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={Object.keys(errors).length > 0}>
-          Verify OTP
+        <Button type="submit" className="sm:w-1/4 w-full" disabled={Object.keys(errors).length > 0}>
+          Submit Now <ArrowRight />
         </Button>
       </form>
     </Form>

@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['personalDetails', 'employee'],
+  whitelist: ['employee'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

@@ -1,23 +1,23 @@
-import { z } from 'zod'
-import { useForm, useFieldArray } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { ChevronRight, Minus, Plus } from 'lucide-react'
-import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { Separator } from '../ui/separator'
-import { Label } from '../ui/label'
-import { IndiaFlag } from '@/assets/image/images'
-import { useDispatch, useSelector } from 'react-redux'
-import { setPersonalDetails } from '@/features/visitor/personalDetailsSlice'
-import { RootState } from '@/app/store'
+import { z } from 'zod';
+import { useForm, useFieldArray } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ChevronRight, Minus, Plus } from 'lucide-react';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Separator } from '../ui/separator';
+import { Label } from '../ui/label';
+import { IndiaFlag } from '@/assets/image/images';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPersonalDetails } from '@/features/visitor/personalDetailsSlice';
+import { RootState } from '@/app/store';
 
 const guestSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   middleName: z.string().optional(),
-  lastName: z.string().min(1, 'Last name is required')
-})
+  lastName: z.string().min(1, 'Last name is required'),
+});
 
 const personalDetailsSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -32,30 +32,30 @@ const personalDetailsSchema = z.object({
   state: z.string().min(1, 'State is required'),
   pincode: z.string().regex(/^\d{6}$/, 'Pincode must be 6 digits'),
   country: z.string().min(1, 'Country is required'),
-  guests: z.array(guestSchema).optional()
-})
+  guests: z.array(guestSchema).optional(),
+});
 
-type PersonalDetailsForm = z.infer<typeof personalDetailsSchema>
+type PersonalDetailsForm = z.infer<typeof personalDetailsSchema>;
 
 const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
-  const dispatch = useDispatch()
-  const personalDetails = useSelector((state: RootState) => state.personalDetails)
+  const dispatch = useDispatch();
+  const personalDetails = useSelector((state: RootState) => state.personalDetails);
 
   const form = useForm<PersonalDetailsForm>({
     resolver: zodResolver(personalDetailsSchema),
-    defaultValues: personalDetails
-  })
+    defaultValues: personalDetails,
+  });
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: 'guests'
-  })
+    name: 'guests',
+  });
 
   const onSubmit = (data: PersonalDetailsForm) => {
-    onNextStep()
-    dispatch(setPersonalDetails(data as any))
-    console.log('Form Data:', data)
-  }
+    onNextStep();
+    dispatch(setPersonalDetails(data as any));
+    console.log('Form Data:', data);
+  };
 
   return (
     <div className="">
@@ -71,7 +71,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                     First Name <span className="text-red-500">*</span>
                   </Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your first name" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,7 +85,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                 <FormItem>
                   <Label>Middle Name</Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your middle name" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -101,7 +101,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                     Last Name <span className="text-red-500">*</span>
                   </Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your last name" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,8 +119,9 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                     <Input
                       type="number"
                       {...field}
-                      disabled={true}
-                      placeholder="Enter your contact number"
+                      disabled={false}
+                      value={personalDetails.contactNumber}
+                      //placeholder={personalDetails.contactNumber}
                       prefix={<img src={IndiaFlag} alt="Indian Flag" className="w-6 h-4" />}
                     />
                   </FormControl>
@@ -136,7 +137,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                 <FormItem>
                   <Label>Designation</Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your designation" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -149,7 +150,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                 <FormItem>
                   <Label>Organisation Name</Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your organisation name" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -164,7 +165,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                     Email<span className="text-red-500">*</span>
                   </Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your email" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -179,7 +180,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                     Address <span className="text-red-500">*</span>
                   </Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your address" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -194,7 +195,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                     City <span className="text-red-500">*</span>
                   </Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your city" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -209,7 +210,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                     State <span className="text-red-500">*</span>
                   </Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your state" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -224,7 +225,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                     Pincode <span className="text-red-500">*</span>
                   </Label>
                   <FormControl>
-                    <Input {...field} placeholder="Enter your pincode" type="number" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -242,7 +243,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                   <FormControl>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select your country" />
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="india">India</SelectItem>
@@ -269,7 +270,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                       Guest {index + 1} - First Name <span className="text-red-500">*</span>
                     </Label>
                     <FormControl>
-                      <Input {...field} placeholder="Enter guest's first name" />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -283,7 +284,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                   <FormItem className="w-full">
                     <Label>Middle Name</Label>
                     <FormControl>
-                      <Input {...field} placeholder="Enter guest's middle name" />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -298,7 +299,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                       Last Name <span className="text-red-500">*</span>
                     </Label>
                     <FormControl>
-                      <Input {...field} placeholder="Enter guest's last name" />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -322,7 +323,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
                 append({
                   firstName: '',
                   middleName: '',
-                  lastName: ''
+                  lastName: '',
                 })
               }
             >
@@ -335,7 +336,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
         </form>
       </Form>
     </div>
-  )
-}
+  );
+};
 
-export default PersonalDetails
+export default PersonalDetails;
