@@ -40,12 +40,10 @@ type PersonalDetailsForm = z.infer<typeof personalDetailsSchema>;
 const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
   const dispatch = useDispatch();
   const personalDetails = useSelector((state: RootState) => state.personalDetails);
-
   const form = useForm<PersonalDetailsForm>({
     resolver: zodResolver(personalDetailsSchema),
     defaultValues: personalDetails,
   });
-
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'guests',
@@ -61,12 +59,12 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
     <div className="">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 ">
+          <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 ">
             <FormField
               control={form.control}
               name="firstName"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-2">
                   <Label>
                     First Name <span className="text-red-500">*</span>
                   </Label>
@@ -82,7 +80,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="middleName"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-2">
                   <Label>Middle Name</Label>
                   <FormControl>
                     <Input {...field} />
@@ -96,7 +94,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="lastName"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-2">
                   <Label>
                     Last Name <span className="text-red-500">*</span>
                   </Label>
@@ -111,15 +109,16 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="contactNumber"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-6">
                   <Label>
-                    Contact Number <span className="text-red-500">*</span>
+                    Contact Number <span className="text-red-500 ">*</span>
                   </Label>
                   <FormControl>
                     <Input
                       type="number"
                       {...field}
                       disabled={false}
+                      className="bg-slate-200"
                       value={personalDetails.contactNumber}
                       //placeholder={personalDetails.contactNumber}
                       prefix={<img src={IndiaFlag} alt="Indian Flag" className="w-6 h-4" />}
@@ -134,7 +133,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="designation"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>Designation</Label>
                   <FormControl>
                     <Input {...field} />
@@ -147,7 +146,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="organisationName"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>Organisation Name</Label>
                   <FormControl>
                     <Input {...field} />
@@ -160,7 +159,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-6">
                   <Label>
                     Email<span className="text-red-500">*</span>
                   </Label>
@@ -175,7 +174,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="address"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-6">
                   <Label>
                     Address <span className="text-red-500">*</span>
                   </Label>
@@ -190,7 +189,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="city"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>
                     City <span className="text-red-500">*</span>
                   </Label>
@@ -205,7 +204,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="state"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>
                     State <span className="text-red-500">*</span>
                   </Label>
@@ -220,7 +219,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="pincode"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>
                     Pincode <span className="text-red-500">*</span>
                   </Label>
@@ -236,7 +235,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="country"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>
                     Country <span className="text-red-500">*</span>
                   </Label>
@@ -257,78 +256,95 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               )}
             />
           </div>
-
           <Separator className="my-4" />
-          {fields.map((field, index) => (
-            <div key={field.id} className="flex flex-col sm:flex-row gap-2 w-full">
-              <FormField
-                control={form.control}
-                name={`guests.${index}.firstName`}
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <Label>
-                      Guest {index + 1} - First Name <span className="text-red-500">*</span>
-                    </Label>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name={`guests.${index}.middleName`}
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <Label>Middle Name</Label>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name={`guests.${index}.lastName`}
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <Label>
-                      Last Name <span className="text-red-500">*</span>
-                    </Label>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex justify-end sm:mt-8">
-                <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)}>
-                  <Minus />
-                </Button>
-              </div>
+          <div className="flex flex-col justify-between mt-1">
+            <label className="mb-1 pb-2">Select Number Of Guest</label>
+            <div className="w-[190px]">
+              <Select
+                value={`${fields.length}`}
+                onValueChange={(value) => {
+                  const guestCount = Number(value);
+                  const difference = guestCount - fields.length;
+                  if (difference > 0) {
+                    Array.from({ length: difference }).forEach(() => append({ firstName: '', lastName: '' }));
+                  } else if (difference < 0) {
+                    Array.from({ length: -difference }).forEach((_, index) => remove(fields.length - 1 - index));
+                  }
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Array.from({ length: 20 }, (_, index) => (
+                    <SelectItem key={index} value={`${index + 1}`}>
+                      {index + 1}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-          ))}
-
-          <div className="flex flex-row justify-between mt-6">
-            <Button
-              size="lg"
-              className="px-0"
-              variant="link"
-              type="button"
-              onClick={() =>
-                append({
-                  firstName: '',
-                  middleName: '',
-                  lastName: '',
-                })
-              }
-            >
-              <Plus /> Add Guest
-            </Button>
+          </div>
+          <Separator className="my-4" />
+          {fields?.length > 0 && (
+            <div className="bg-gray-100 p-5 rounded-lg">
+              {fields.map((field, index) => (
+                <div key={field.id} className="p-1">
+                  <div className="flex flex-col sm:flex-row gap-2 w-full">
+                    <FormField
+                      control={form.control}
+                      name={`guests.${index}.firstName`}
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <Label>
+                            Guest {index + 1} - First Name <span className="text-red-500">*</span>
+                          </Label>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`guests.${index}.middleName`}
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <Label>Middle Name</Label>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`guests.${index}.lastName`}
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <Label>
+                            Last Name <span className="text-red-500">*</span>
+                          </Label>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <div className="flex justify-end sm:mt-8">
+                      <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)}>
+                        <Minus />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="flex justify-end mt-5">
             <Button type="submit" className="" size="lg">
               Continue <ChevronRight />
             </Button>
