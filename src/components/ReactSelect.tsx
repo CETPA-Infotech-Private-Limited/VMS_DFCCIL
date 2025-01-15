@@ -27,7 +27,7 @@ const ReactSelect = ({ selectedEmployee, setSelectedEmployee }) => {
         setSelectedEmployee(e);
         console.log(e);
       }}
-      placeholder="Select an employee..."
+      placeholder="Search here"
       isSearchable
       isClearable
     />

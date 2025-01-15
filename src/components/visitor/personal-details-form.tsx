@@ -12,6 +12,9 @@ import { IndiaFlag } from '@/assets/image/images';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPersonalDetails } from '@/features/visitor/personalDetailsSlice';
 import { RootState } from '@/app/store';
+import OrganisationDetailsForm from './organisation-details-form';
+import { useState } from 'react';
+import { Employee } from '@/types/Employee';
 
 const guestSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -38,6 +41,10 @@ const personalDetailsSchema = z.object({
 type PersonalDetailsForm = z.infer<typeof personalDetailsSchema>;
 
 const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
+  const [selectedSlot, setSelectedSlot] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(undefined);
+
   const dispatch = useDispatch();
   const personalDetails = useSelector((state: RootState) => state.personalDetails);
 
@@ -314,6 +321,16 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
             </div>
           ))}
 
+          <OrganisationDetailsForm
+            onNextStep={() => {}}
+            onBackStep={() => {}}
+            selectedEmployee={selectedEmployee}
+            setSelectedEmployee={setSelectedEmployee}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            selectedSlot={selectedSlot}
+            setSelectedSlot={setSelectedSlot}
+          />
           <div className="flex flex-row justify-between mt-6">
             <Button
               size="lg"
@@ -330,6 +347,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
             >
               <Plus /> Add Guest
             </Button>
+
             <Button type="submit" className="" size="lg">
               Continue <ChevronRight />
             </Button>
