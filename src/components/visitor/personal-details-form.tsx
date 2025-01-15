@@ -61,12 +61,12 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
     <div className="">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 ">
+          <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 ">
             <FormField
               control={form.control}
               name="firstName"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-2">
                   <Label>
                     First Name <span className="text-red-500">*</span>
                   </Label>
@@ -82,7 +82,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="middleName"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-2">
                   <Label>Middle Name</Label>
                   <FormControl>
                     <Input {...field} />
@@ -96,7 +96,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="lastName"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-2">
                   <Label>
                     Last Name <span className="text-red-500">*</span>
                   </Label>
@@ -111,15 +111,16 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="contactNumber"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-6">
                   <Label>
-                    Contact Number <span className="text-red-500">*</span>
+                    Contact Number <span className="text-red-500 ">*</span>
                   </Label>
                   <FormControl>
                     <Input
                       type="number"
                       {...field}
                       disabled={false}
+                      className="bg-slate-200"
                       value={personalDetails.contactNumber}
                       //placeholder={personalDetails.contactNumber}
                       prefix={<img src={IndiaFlag} alt="Indian Flag" className="w-6 h-4" />}
@@ -134,7 +135,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="designation"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>Designation</Label>
                   <FormControl>
                     <Input {...field} />
@@ -147,7 +148,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="organisationName"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>Organisation Name</Label>
                   <FormControl>
                     <Input {...field} />
@@ -160,7 +161,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-6">
                   <Label>
                     Email<span className="text-red-500">*</span>
                   </Label>
@@ -175,7 +176,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="address"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-6">
                   <Label>
                     Address <span className="text-red-500">*</span>
                   </Label>
@@ -190,7 +191,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="city"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>
                     City <span className="text-red-500">*</span>
                   </Label>
@@ -205,7 +206,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="state"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>
                     State <span className="text-red-500">*</span>
                   </Label>
@@ -220,7 +221,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="pincode"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>
                     Pincode <span className="text-red-500">*</span>
                   </Label>
@@ -236,7 +237,7 @@ const PersonalDetails = ({ onNextStep }: { onNextStep: () => void }) => {
               control={form.control}
               name="country"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="sm:col-span-3">
                   <Label>
                     Country <span className="text-red-500">*</span>
                   </Label>

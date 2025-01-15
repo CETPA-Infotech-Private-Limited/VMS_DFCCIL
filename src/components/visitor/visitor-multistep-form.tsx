@@ -3,10 +3,11 @@ import Stepper from '../ui/stepper';
 import PersonalDetails from './personal-details-form';
 import OrganisationDetailsForm from './organisation-details-form';
 import FinalFormReview from './final-form-review';
-import { BadgeCheck } from 'lucide-react';
+import { BadgeCheck, IdCardIcon } from 'lucide-react';
 import { Link, Navigate, useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
+import { Label } from '../ui/label';
 
 const VisitorMultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -27,7 +28,11 @@ const VisitorMultiStepForm = () => {
     <div className="w-full">
       {currentStep !== 3 ? (
         <div className="bg-white p-3 sm:p-8 rounded-lg shadow-md">
-          <Stepper steps={steps} currentStep={currentStep} />
+          {/* <Stepper steps={steps} currentStep={currentStep} /> */}
+          <Label className="flex items-center">
+            <IdCardIcon color="blue" size="40px " className="mr-2" />
+            <p className="font-bold">Add Your Details</p>
+          </Label>
           <div className="mt-6">
             {currentStep === 0 && <PersonalDetails onNextStep={handleNextStep} />}
             {currentStep === 1 && (
