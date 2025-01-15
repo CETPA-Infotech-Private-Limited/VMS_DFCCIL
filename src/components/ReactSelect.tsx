@@ -14,6 +14,7 @@ const ReactSelect = ({ selectedEmployee, setSelectedEmployee }) => {
         empName: emp.empName || '',
         empCode: emp.empCode || '',
         designation: emp.designation || '',
+        department: emp.department || '',
       })),
     [employees]
   );

@@ -108,7 +108,7 @@ const OrganisationDetailsForm = ({
         </CardContent>
       </Card>
 
-      <div className="mt-4">
+      <div className="mt-4 justify-center">
         <div className="flex flex-row items-center gap-2">
           <CalendarIcon className="text-primary" />
           <Heading type={6}> Date</Heading>
@@ -124,13 +124,9 @@ const OrganisationDetailsForm = ({
                 value={selectedDate}
                 onSelect={(date) => setSelectedDate(date)}
               />
-              {selectedDate && (
-                <p className="mt-2 text-sm text-gray-600">
-                  Selected Date: <strong>{selectedDate.toDateString()}</strong>
-                </p>
-              )}
             </div>
           </div>
+
           {selectedDate && (
             <div className="w-full sm:w-1/2 mt-2 sm:mt-6">
               <Label className="text-lg font-semibold flex items-center gap-2">
@@ -161,15 +157,15 @@ const OrganisationDetailsForm = ({
             </div>
           )}
         </div>
-      </div>
-
-      <div className="flex flex-row justify-between mt-6">
-        <Button variant="outline" size="lg" className="px-3" onClick={onBackStep}>
-          <ChevronLeft /> Back
-        </Button>
-        <Button type="submit" size="lg" onClick={onNextStep} disabled={!selectedSlot || !selectedDate}>
-          Continue <ChevronRight />
-        </Button>
+        {selectedDate && (
+          <div className="flex w-full justify-center text-center">
+            {' '}
+            <p className="mt-2 text-sm p-2 w-fit text-center border-2 border-black border-dotted  text-gray-600">
+              {' '}
+              Selected Date: <strong>{selectedDate.toDateString()}</strong> | <strong>{selectedSlot}</strong>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

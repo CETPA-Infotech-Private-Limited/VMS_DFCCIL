@@ -4,6 +4,7 @@ export interface Employee {
   empCode: string;
   empName: string;
   designation: string;
+  department: string;
 }
 
 export interface SelectOption {
@@ -14,12 +15,14 @@ export interface SelectOption {
   designation: string;
   unitName: string;
   unitId: string;
+  department: string;
 }
 
 export interface SelectedEmployee {
   empName: string;
   empCode: string;
   designation: string;
+  department: string;
 }
 
 export interface AssetAllocationDetails {
